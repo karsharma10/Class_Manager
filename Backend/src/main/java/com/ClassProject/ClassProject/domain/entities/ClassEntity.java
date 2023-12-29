@@ -1,4 +1,4 @@
-package com.ClassProject.ClassProject.respositories;
+package com.ClassProject.ClassProject.domain.entities;
 
 
 import jakarta.persistence.*;
