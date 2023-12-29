@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,12 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ClassRepositoryIntegrationTesting {
+public class ClassEntityRepositoryIntegrationTests {
 
     private ClassRespository underTests;
 
     @Autowired
-    public ClassRepositoryIntegrationTesting(ClassRespository classRespository){
+    public ClassEntityRepositoryIntegrationTests(ClassRespository classRespository){
         this.underTests = classRespository;
     }
 
@@ -75,5 +74,19 @@ public class ClassRepositoryIntegrationTesting {
         assertThat(results.get().getName()).isEqualTo("Test Class");
     }
 
+    @Test
+    public void testThatClassCanBeCreatedAndDeleted(){
+        StudentEntity TestStudentEntityA = TestData.createStudentA();
+
+        ClassEntity TestClassEntityA = TestData.createClassA(TestStudentEntityA);
+
+        underTests.save(TestClassEntityA);
+        underTests.deleteById(TestClassEntityA.getId());
+
+        Optional<ClassEntity> results = underTests.findById(TestClassEntityA.getId());
+
+        assertThat(results).isEmpty();
+
+    }
 
 }

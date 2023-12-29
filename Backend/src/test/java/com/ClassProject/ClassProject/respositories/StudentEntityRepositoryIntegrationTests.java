@@ -9,21 +9,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Iterator;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class StudentRespositoryIntegrationTesting {
+public class StudentEntityRepositoryIntegrationTests {
 
     private StudentRespository underTests;
     private ClassRespository classRespository;
     @Autowired
-    StudentRespositoryIntegrationTesting(StudentRespository studentRespository, ClassRespository classRespository){
+    StudentEntityRepositoryIntegrationTests(StudentRespository studentRespository, ClassRespository classRespository){
         this.underTests = studentRespository;
         this.classRespository = classRespository;
     }
@@ -81,6 +79,6 @@ public class StudentRespositoryIntegrationTesting {
         assertThat(results).isEmpty();
 
     }
-    
+
 
 }
