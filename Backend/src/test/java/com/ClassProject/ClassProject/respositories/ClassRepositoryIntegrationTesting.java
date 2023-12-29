@@ -75,5 +75,5 @@ public class ClassRepositoryIntegrationTesting {
         assertThat(results.get().getName()).isEqualTo("Test Class");
     }
 
-    
+
 }

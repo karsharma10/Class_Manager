@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Iterator;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -20,10 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StudentRespositoryIntegrationTesting {
 
     private StudentRespository underTests;
-
+    private ClassRespository classRespository;
     @Autowired
-    StudentRespositoryIntegrationTesting(StudentRespository studentRespository){
+    StudentRespositoryIntegrationTesting(StudentRespository studentRespository, ClassRespository classRespository){
         this.underTests = studentRespository;
+        this.classRespository = classRespository;
     }
 
     @Test
@@ -67,5 +69,18 @@ public class StudentRespositoryIntegrationTesting {
         assertThat(results.get().getFirst_name()).isEqualTo("TestA");
     }
 
+    @Test
+    public void testThatStudentCanBeCreatedAndUDeleted(){
+        StudentEntity testStudentA = TestData.createStudentA();
+
+        underTests.save(testStudentA);
+        underTests.deleteById(testStudentA.getId());
+
+        Optional<StudentEntity> results = underTests.findById(testStudentA.getId());
+
+        assertThat(results).isEmpty();
+
+    }
+    
 
 }

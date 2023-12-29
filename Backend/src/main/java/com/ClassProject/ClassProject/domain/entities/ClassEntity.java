@@ -21,8 +21,9 @@ public class ClassEntity {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL) //when we retrieve the author from the database, if we make changes to the author when we retrieve it, those changes will be consistent.
     @JoinColumn(name = "student_id")
     private StudentEntity studentEntity;
 
 }
+
