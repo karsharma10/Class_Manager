@@ -38,4 +38,21 @@ public class TestData {
                     .studentEntity(studentEntity)
                     .build();
     }
+
+    public static ClassEntity createClassB(final StudentEntity studentEntity){
+        return ClassEntity.builder()
+                .id(2L)
+                .name("Science Class")
+                .studentEntity(studentEntity)
+                .build();
+    }
+
+    public static ClassEntity createClassC(final StudentEntity studentEntity){
+        return ClassEntity.builder()
+                .id(3L)
+                .name("History Class")
+                .studentEntity(studentEntity)
+                .build();
+    }
+
 }

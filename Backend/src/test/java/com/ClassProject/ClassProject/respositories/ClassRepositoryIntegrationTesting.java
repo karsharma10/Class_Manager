@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,5 +40,22 @@ public class ClassRepositoryIntegrationTesting {
         assertThat(results.get()).isEqualTo(testClassA);
     }
 
+    @Test
+    public void testThatMultipleClassesCanBeCreatedAndRecalled(){
+        StudentEntity testStudentA = TestData.createStudentA();
 
+        ClassEntity testClassA = TestData.createClassA(testStudentA);
+        ClassEntity testClassB = TestData.createClassB(testStudentA);
+        ClassEntity testClassC = TestData.createClassC(testStudentA);
+
+        underTests.save(testClassA);
+        underTests.save(testClassB);
+        underTests.save(testClassC);
+
+        Iterable<ClassEntity> results = underTests.findAll();
+
+        assertThat(results).hasSize(3);
+        assertThat(results).contains(testClassA,testClassB,testClassC);
+
+    }
 }
