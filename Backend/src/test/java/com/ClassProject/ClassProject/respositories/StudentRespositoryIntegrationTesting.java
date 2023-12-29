@@ -52,5 +52,19 @@ public class StudentRespositoryIntegrationTesting {
         assertThat(results).contains(testStudentEntityA, testStudentEntityB, testStudentEntityC);
     }
 
+    @Test
+    public void testThatStudentCanBeCreatedAndUpdated(){
+        StudentEntity testStudentEntityA = TestData.createStudentA();
+
+        underTests.save(testStudentEntityA);
+        testStudentEntityA.setFirst_name("TestA");
+
+        underTests.save(testStudentEntityA);
+
+        Optional<StudentEntity> results = underTests.findById(testStudentEntityA.getId());
+
+        assertThat(results).isPresent();
+        assertThat(results.get().getFirst_name()).isEqualTo("TestA");
+    }
 
 }
