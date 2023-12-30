@@ -62,5 +62,16 @@ public class ClassController {
         }
     }
 
+    @DeleteMapping(path = "/class/{id}")
+    public ResponseEntity deleteClass(@PathVariable Long id){
+        if(!classService.isExists(id)){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        else{
+            classService.deleteClass(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
+
 
 }

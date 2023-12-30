@@ -14,4 +14,6 @@ public interface ClassService {
     boolean isExists(Long id);
 
     ClassEntity fullUpdate(ClassEntity classEntity, Long id);
+
+    void deleteClass(Long id);
 }

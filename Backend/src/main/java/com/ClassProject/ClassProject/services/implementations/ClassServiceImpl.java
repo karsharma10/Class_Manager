@@ -46,4 +46,9 @@ public class ClassServiceImpl implements ClassService {
        classEntity.setId(id);
        return classRepository.save(classEntity);
     }
+
+    @Override
+    public void deleteClass(Long id) {
+        classRepository.deleteById(id);
+    }
 }

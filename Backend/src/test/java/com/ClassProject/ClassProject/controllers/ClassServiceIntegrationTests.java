@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -131,5 +133,33 @@ public class ClassServiceIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(testClassDtoA.getId()))
                 .andExpect(jsonPath("$.name").value(testClassDtoA.getName()));
+    }
+
+
+    @Test
+    public void testThatDeleteExistingClassReturnsTheCorrectHttpStatusOk() throws Exception {
+        ClassEntity testClassA = TestData.createClassA(null);
+        classRepository.save(testClassA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/class/"+testClassA.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatDeleteNonExistingClassReturnsCorrectHttpStatusNotFound() throws Exception{
+        ClassEntity testClassB = TestData.createClassB(null);
+        classRepository.save(testClassB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/students/10000")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
     }
 }

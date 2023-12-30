@@ -16,6 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.awt.*;
 
@@ -151,6 +152,18 @@ public class StudentServiceIntegrationTests {
         ).andExpect(status().isOk());
     }
 
-    
+    @Test
+    public void testThatDeletingNonExistingStudentReturnsCorrectHttpStatusNotFound() throws Exception{
+        StudentEntity testStudentB = TestData.createStudentB();
+        studentRespository.save(testStudentB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/class/10000")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
 
 }
