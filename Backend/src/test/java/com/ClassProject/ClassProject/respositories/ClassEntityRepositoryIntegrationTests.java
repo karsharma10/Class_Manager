@@ -20,15 +20,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClassEntityRepositoryIntegrationTests {
 
-    private ClassRespository underTests;
+    private ClassRepository underTests;
 
     @Autowired
-    public ClassEntityRepositoryIntegrationTests(ClassRespository classRespository){
-        this.underTests = classRespository;
+    public ClassEntityRepositoryIntegrationTests(ClassRepository classRepository) {
+        this.underTests = classRepository;
     }
 
     @Test
-    public void testThatClassCanBeCreatedAndRecalled(){
+    public void testThatClassCanBeCreatedAndRecalled() {
         StudentEntity testStudentA = TestData.createStudentA();
         ClassEntity testClassA = TestData.createClassA(testStudentA);
 
@@ -40,7 +40,7 @@ public class ClassEntityRepositoryIntegrationTests {
     }
 
     @Test
-    public void testThatMultipleClassesCanBeCreatedAndRecalled(){
+    public void testThatMultipleClassesCanBeCreatedAndRecalled() {
         StudentEntity testStudentA = TestData.createStudentA();
 
         ClassEntity testClassA = TestData.createClassA(testStudentA);
@@ -54,12 +54,12 @@ public class ClassEntityRepositoryIntegrationTests {
         Iterable<ClassEntity> results = underTests.findAll();
 
         assertThat(results).hasSize(3);
-        assertThat(results).contains(testClassA,testClassB,testClassC);
+        assertThat(results).contains(testClassA, testClassB, testClassC);
 
     }
 
     @Test
-    public void testThatClassCanBeCreatedAndUpdated(){
+    public void testThatClassCanBeCreatedAndUpdated() {
         StudentEntity testStudentA = TestData.createStudentA();
 
         ClassEntity testClassA = TestData.createClassA(testStudentA);
@@ -75,7 +75,7 @@ public class ClassEntityRepositoryIntegrationTests {
     }
 
     @Test
-    public void testThatClassCanBeCreatedAndDeleted(){
+    public void testThatClassCanBeCreatedAndDeleted() {
         StudentEntity TestStudentEntityA = TestData.createStudentA();
 
         ClassEntity TestClassEntityA = TestData.createClassA(TestStudentEntityA);

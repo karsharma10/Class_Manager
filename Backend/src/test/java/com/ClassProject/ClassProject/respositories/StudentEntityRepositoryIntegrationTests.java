@@ -19,16 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StudentEntityRepositoryIntegrationTests {
 
     private StudentRespository underTests;
-    private ClassRespository classRespository;
+    private ClassRepository classRepository;
     @Autowired
-    StudentEntityRepositoryIntegrationTests(StudentRespository studentRespository, ClassRespository classRespository){
+    StudentEntityRepositoryIntegrationTests(StudentRespository studentRespository, ClassRepository classRepository){
         this.underTests = studentRespository;
-        this.classRespository = classRespository;
+        this.classRepository = classRepository;
     }
 
     @Test
     public void studentCanBeRecalledAndCreated(){
-
         StudentEntity testStudentA = TestData.createStudentA();
         underTests.save(testStudentA);
 
