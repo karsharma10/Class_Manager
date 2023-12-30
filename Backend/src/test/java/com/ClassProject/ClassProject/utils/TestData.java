@@ -23,6 +23,15 @@ public class TestData {
                 .build();
     }
 
+    public static StudentDto createStudentBDto() {
+        return StudentDto.builder()
+                .id(2L)
+                .first_name("StudentBFirst")
+                .last_name("StudentBLast")
+                .age(50)
+                .build();
+    }
+
 
     public static StudentEntity createStudentB() {
         return StudentEntity.builder()

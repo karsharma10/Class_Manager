@@ -112,6 +112,29 @@ public class StudentServiceIntegrationTests {
                 .andExpect(status().isNotFound());
     }
 
-    
+
+    @Test
+    public void studentControllerReturnsTheCorrectObjectWhenUpdatingAStudent() throws Exception {
+        StudentEntity testStudentA = TestData.createStudentA();
+        studentRespository.save(testStudentA);
+
+        StudentDto testStudentDtoB = TestData.createStudentBDto();
+        testStudentDtoB.setId(testStudentA.getId());
+
+        String jsonTestStudentB = objectMapper.writeValueAsString(testStudentDtoB);
+
+        mockMvc.perform(post("/students/"+testStudentDtoB.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonTestStudentB)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(testStudentDtoB.getId()))
+                .andExpect(jsonPath("$.first_name").value(testStudentDtoB.getFirst_name()))
+                .andExpect(jsonPath("$.last_name").value(testStudentDtoB.getLast_name()))
+                .andExpect(jsonPath("$.age").value(testStudentDtoB.getAge()));
+
+
+    }
 
 }
