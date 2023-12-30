@@ -10,4 +10,8 @@ public interface ClassService {
     List<ClassEntity> getClassesForStudent(ClassEntity classEntity);
 
     List<ClassEntity> getAllClasses();
+
+    boolean isExists(Long id);
+
+    ClassEntity fullUpdate(ClassEntity classEntity, Long id);
 }

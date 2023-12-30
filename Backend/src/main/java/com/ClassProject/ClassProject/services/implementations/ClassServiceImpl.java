@@ -35,4 +35,15 @@ public class ClassServiceImpl implements ClassService {
 
         return StreamSupport.stream(results.spliterator(),false).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isExists(Long id) {
+        return classRepository.existsById(id);
+    }
+
+    @Override
+    public ClassEntity fullUpdate(ClassEntity classEntity, Long id) {
+       classEntity.setId(id);
+       return classRepository.save(classEntity);
+    }
 }

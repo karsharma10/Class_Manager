@@ -110,4 +110,26 @@ public class ClassServiceIntegrationTests {
                 .andExpect(jsonPath("[0].id").value(testClassAEntity.getId()))
                 .andExpect(jsonPath("[0].name").value(testClassAEntity.getName()));
     }
+
+    @Test
+    public void testThatUpdateANonExistingClassReturnsCorrectObject() throws Exception{
+        ClassEntity testClassEntityA = TestData.createClassA(null);
+        classRepository.save(testClassEntityA);
+
+        ClassDto testClassDtoA = TestData.createClassADto(null);
+        testClassDtoA.setName("Test Update");
+        testClassDtoA.setId(testClassEntityA.getId());
+
+
+        String json = objectMapper.writeValueAsString(testClassDtoA);
+
+        mockMvc.perform(post("/class/"+ testClassDtoA.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(testClassDtoA.getId()))
+                .andExpect(jsonPath("$.name").value(testClassDtoA.getName()));
+    }
 }
