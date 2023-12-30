@@ -1,5 +1,6 @@
 package com.ClassProject.ClassProject.controllers;
 
+import com.ClassProject.ClassProject.domain.dto.StudentDto;
 import com.ClassProject.ClassProject.domain.entities.StudentEntity;
 import com.ClassProject.ClassProject.respositories.StudentRespository;
 import com.ClassProject.ClassProject.utils.TestData;
@@ -95,4 +96,22 @@ public class StudentServiceIntegrationTests {
                 .andExpect(jsonPath("$[0].age").value(testStudentEntityA.getAge()));
 
     }
+
+    @Test
+    public void studentControllerReturnsCorrectHttpStatusWhenTryingToUpdateANonExistingStudent404() throws Exception {
+
+        StudentDto testStudentA = TestData.createStudentADto();
+        String json = objectMapper.writeValueAsString(testStudentA);
+
+
+        mockMvc.perform(post("/students/100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    
+
 }

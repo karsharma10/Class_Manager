@@ -29,4 +29,16 @@ public class StudentServiceImpl implements StudentService {
 
         return findAllStudents;
     }
+
+    @Override
+    public boolean isExists(Long id) {
+        return studentRespository.existsById(id);
+    }
+
+    @Override
+    public StudentEntity fullUpdate(StudentEntity studentEntity, Long id) {
+       studentEntity.setId(id);
+
+       return studentRespository.save(studentEntity);
+    }
 }

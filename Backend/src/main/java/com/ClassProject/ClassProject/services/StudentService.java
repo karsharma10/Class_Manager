@@ -8,4 +8,8 @@ public interface StudentService {
     StudentEntity save(StudentEntity studentEntity);
 
     List<StudentEntity> getAllStudents();
+
+    boolean isExists(Long id);
+
+    StudentEntity fullUpdate(StudentEntity studentEntity, Long id);
 }

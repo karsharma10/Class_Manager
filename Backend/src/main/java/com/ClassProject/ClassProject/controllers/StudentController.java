@@ -4,10 +4,9 @@ import com.ClassProject.ClassProject.domain.dto.StudentDto;
 import com.ClassProject.ClassProject.domain.entities.StudentEntity;
 import com.ClassProject.ClassProject.mappers.Mapper;
 import com.ClassProject.ClassProject.services.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +34,19 @@ public class StudentController {
         List<StudentDto> convertResult = studentEntityList.stream().map(studentEntity -> studentMapper.mapTo(studentEntity)).collect(Collectors.toList());
 
         return convertResult;
+    }
+
+    @PostMapping(path = "/students/{id}")
+    public ResponseEntity<StudentDto> fullUpdate(@RequestBody StudentDto studentDto, @PathVariable Long id){
+        if(!studentService.isExists(id)){ //doesn't exist
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{ //it does exist so do a full update
+            StudentEntity convertedStudent = studentMapper.mapFrom(studentDto);
+            StudentEntity result = studentService.fullUpdate(convertedStudent, id);
+
+            return new ResponseEntity<>(studentMapper.mapTo(result), HttpStatus.OK);
+        }
     }
 
 }
