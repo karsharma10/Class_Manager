@@ -9,6 +9,7 @@ import com.ClassProject.ClassProject.services.ClassService;
 import com.ClassProject.ClassProject.utils.TestData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.istack.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,8 @@ public class ClassServiceIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonTestClassA)
                 .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk())
+                )
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].name").value(testClassAEntity.getName()))
                 .andExpect(jsonPath("$[1].id").value(2L))
@@ -103,7 +105,9 @@ public class ClassServiceIntegrationTests {
         mockMvc.perform(get("/allClasses")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk());
-
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("[0].id").value(testClassAEntity.getId()))
+                .andExpect(jsonPath("[0].name").value(testClassAEntity.getName()));
     }
 }
