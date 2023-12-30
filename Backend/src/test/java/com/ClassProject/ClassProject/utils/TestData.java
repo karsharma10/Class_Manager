@@ -1,5 +1,7 @@
 package com.ClassProject.ClassProject.utils;
 
+import com.ClassProject.ClassProject.domain.dto.ClassDto;
+import com.ClassProject.ClassProject.domain.dto.StudentDto;
 import com.ClassProject.ClassProject.domain.entities.ClassEntity;
 import com.ClassProject.ClassProject.domain.entities.StudentEntity;
 
@@ -12,6 +14,15 @@ public class TestData {
                 .age(45)
                 .build();
     }
+    public static StudentDto createStudentADto() {
+        return StudentDto.builder()
+                .id(1L)
+                .first_name("StudentAFirst")
+                .last_name("StudentALast")
+                .age(45)
+                .build();
+    }
+
 
     public static StudentEntity createStudentB() {
         return StudentEntity.builder()
@@ -37,6 +48,13 @@ public class TestData {
                     .name("Math Class")
                     .studentEntity(studentEntity)
                     .build();
+    }
+    public static ClassDto createClassADto(final StudentDto studentDto){
+        return ClassDto.builder()
+                .id(1L)
+                .name("Math Class")
+                .studentDto(studentDto)
+                .build();
     }
 
     public static ClassEntity createClassB(final StudentEntity studentEntity){

@@ -41,4 +41,12 @@ public class ClassController {
         return results.stream().map(classEntity -> classMapper.mapTo(classEntity)).collect(Collectors.toList());
     }
 
+    @GetMapping(path ="/allClasses")
+    public List<ClassDto> getAllClasses() {
+        List<ClassEntity> allClassesEntities = classService.getAllClasses();
+
+        return allClassesEntities.stream().map(classEntity -> classMapper.mapTo(classEntity)).collect(Collectors.toList());
+    }
+
+
 }

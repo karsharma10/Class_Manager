@@ -6,6 +6,9 @@ import com.ClassProject.ClassProject.services.ClassService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -24,5 +27,12 @@ public class ClassServiceImpl implements ClassService {
     public List<ClassEntity> getClassesForStudent(ClassEntity classEntity) {
         List<ClassEntity> results = classRepository.findByStudentEntity_Id(classEntity.getStudentEntity().getId());
         return results;
+    }
+
+    @Override
+    public List<ClassEntity> getAllClasses() {
+        Iterable<ClassEntity> results = classRepository.findAll();
+
+        return StreamSupport.stream(results.spliterator(),false).collect(Collectors.toList());
     }
 }

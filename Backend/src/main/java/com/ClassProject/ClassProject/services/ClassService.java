@@ -8,4 +8,6 @@ public interface ClassService {
     ClassEntity save(ClassEntity classEntity);
 
     List<ClassEntity> getClassesForStudent(ClassEntity classEntity);
+
+    List<ClassEntity> getAllClasses();
 }
