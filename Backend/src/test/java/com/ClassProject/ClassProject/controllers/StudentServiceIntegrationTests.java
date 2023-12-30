@@ -15,9 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.awt.*;
 
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -136,5 +138,19 @@ public class StudentServiceIntegrationTests {
 
 
     }
+
+    @Test
+    public void studentControllerReturnsTheCorrectHttpStatusWhenDeletingStudent() throws Exception{
+        StudentEntity studentEntityA = TestData.createStudentA();
+        studentRespository.save(studentEntityA);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/students/"+studentEntityA.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    
 
 }

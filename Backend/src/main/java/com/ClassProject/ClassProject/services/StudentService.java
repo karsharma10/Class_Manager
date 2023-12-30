@@ -12,4 +12,6 @@ public interface StudentService {
     boolean isExists(Long id);
 
     StudentEntity fullUpdate(StudentEntity studentEntity, Long id);
+
+    void deleteStudent(Long id);
 }

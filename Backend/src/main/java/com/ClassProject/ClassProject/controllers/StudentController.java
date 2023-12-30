@@ -48,5 +48,15 @@ public class StudentController {
             return new ResponseEntity<>(studentMapper.mapTo(result), HttpStatus.OK);
         }
     }
+    @DeleteMapping(path = "/students/{id}")
+    public ResponseEntity deleteStudent(@PathVariable Long id){
+        if(!studentService.isExists(id)){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        else{
+            studentService.deleteStudent(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
 
 }
