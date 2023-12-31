@@ -166,4 +166,34 @@ public class StudentServiceIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatGetSpecificStudentByIdReturnsCorrectHttpStatusWhenNotFound() throws Exception{
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/students/100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatGetSpecificStudentReturnsCorrectHttpStatusWhenFound() throws Exception{
+
+        StudentEntity testStudentA = TestData.createStudentA();
+        studentRespository.save(testStudentA);
+
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/students/"+testStudentA.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    
+
 }

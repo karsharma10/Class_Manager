@@ -6,6 +6,7 @@ import com.ClassProject.ClassProject.services.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -45,6 +46,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         studentRespository.deleteById(id);
+    }
+
+    @Override
+    public StudentEntity getStudent(Long id) {
+        Optional<StudentEntity> results = studentRespository.findById(id);
+        assert(results.isPresent());
+        return results.get();
     }
 
 

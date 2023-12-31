@@ -36,6 +36,18 @@ public class StudentController {
         return convertResult;
     }
 
+    @GetMapping(path = "/students/{id}")
+    public ResponseEntity<StudentDto> getStudent(@PathVariable Long id){
+        if(!studentService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            StudentEntity results = studentService.getStudent(id);
+            StudentDto convertResults = studentMapper.mapTo(results);
+            return new ResponseEntity<>(convertResults,HttpStatus.OK);
+        }
+    }
+
     @PostMapping(path = "/students/{id}")
     public ResponseEntity<StudentDto> fullUpdate(@RequestBody StudentDto studentDto, @PathVariable Long id){
         if(!studentService.isExists(id)){ //doesn't exist
