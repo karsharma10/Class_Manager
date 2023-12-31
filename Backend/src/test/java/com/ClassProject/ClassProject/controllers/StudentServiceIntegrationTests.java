@@ -194,6 +194,26 @@ public class StudentServiceIntegrationTests {
         );
     }
 
-    
+    @Test
+    public void testThatSpecificStudentReturnsTheCorrectObject() throws Exception{
+        StudentEntity testStudentB = TestData.createStudentB();
+        studentRespository.save(testStudentB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/students/"+testStudentB.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        ).andExpect(
+              MockMvcResultMatchers.jsonPath("$.id").value(testStudentB.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.first_name").value(testStudentB.getFirst_name())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.last_name").value(testStudentB.getLast_name())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(testStudentB.getAge())
+        );
+    }
 
 }
